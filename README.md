@@ -12,6 +12,16 @@ Recommended environment:
 * 9Router
 * Internet connection
 # 2. Install Required ROS 2 Packages
+mkdir -p ~/ur_gazebo/src
+cd ~/ur_gazebo/src
+git clone -b humble https://github.com/UniversalRobots/Universal_Robots_ROS2_Gazebo_Simulation.git
+
+cd ~/ur_gazebo
+source /opt/ros/humble/setup.bash
+rosdep update
+rosdep install --ignore-src --from-paths src -y
+colcon build --symlink-install
+source ~/ur_gazebo/install/setup.bash
 
 Install the required Universal Robots, Gazebo and MoveIt packages:
 
