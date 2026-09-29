@@ -52,19 +52,35 @@ mkdir -p ~/ws/src && cp -r ur3_llm_control ~/ws/src/ && cd ~/ws
 colcon build --packages-select ur3_llm_control && source install/setup.bash
 ```
 ## 9Router
-Bật 9Router, tạo provider/combo, rồi:
-```bash
-export NINEROUTER_BASE_URL=http://localhost:20128/v1   
-export NINEROUTER_API_KEY=<key trong dashboard>
-export NINEROUTER_MODEL=<tên model hoặc combo>
-```
+# Node.js >= 18 (ví dụ bằng nvm)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20 && nvm use 20
+
+npm install -g 9router
+9router          # giữ cửa sổ này mở; dashboard: http://localhost:20128/dashboard
+## Trong dashboard: mở Providers và kết nối một provider (ví dụ OpenCode Free – không cần đăng nhập), vào Endpoint & Key → Create Key để lấy API key. Rồi đặt biến môi trường (terminal sẽ chạy planner):
+
+bash
+export NINEROUTER_BASE_URL=http://localhost:20128/v1
+export NINEROUTER_API_KEY=sk-...                       # key của bạn (KHÔNG commit lên git)
+export NINEROUTER_MODEL=oc/muse-spark-1.3-contributor-free   # tên model trong dashboard
+
 
 ## Chạy
-```bash
-# Terminal 1: Gazebo + MoveIt + executor
+
+# Terminal 1 – mô phỏng + MoveIt 2 + executor:
+source /opt/ros/humble/setup.bash && source ~/ws/install/setup.bash
+export PYTHONUNBUFFERED=1
 ros2 launch ur3_llm_control llm_robot.launch.py
-# Terminal 2: planner (nhập lệnh trực tiếp)
+ros2 service call /delete_entity gazebo_msgs/srv/DeleteEntity "{name: 'ground_plane'}"
+# Terminal 2 – nhập lệnh tự nhiên
+source /opt/ros/humble/setup.bash && source ~/ws/install/setup.bash
 ros2 run ur3_llm_control llm_planner
 ```
-Ví dụ: `Please put the red cube in zone B.` · `Hãy lấy khối màu vàng và đặt nó vào ô A.` ·
-`Move the blue cube to zone C.` · `Arrange all objects according to my student ID.`
+Mức	Lệnh
+Cơ bản	Please put the red cube in zone A.
+Cơ bản (tiếng Việt)	Hãy lấy khối màu vàng và đặt nó vào ô B.
+Cơ bản	Move the blue cube to zone C.
+Nâng cao	Arrange all objects according to my student ID.
+Lệnh sai (bị từ chối)	move the green cube to zone Z
