@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ur3_llm_control</name>
+  <version>0.1.0</version>
+  <description>Dieu khien UR3/UR3e bang LLM + skill-based planning (MoveIt 2)</description>
+  <maintainer email="student@example.com">student</maintainer>
+  <license>MIT</license>
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>shape_msgs</depend>
+  <depend>moveit_msgs</depend>
+  <depend>gazebo_msgs</depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <exec_depend>ur_simulation_gazebo</exec_depend>
+  <exec_depend>ur_moveit_config</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

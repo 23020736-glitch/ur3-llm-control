@@ -1,0 +1,25 @@
+# Toa do trong frame base_link cua UR (vung lam viec nam o phia x AM cua base_link).
+# base_link trung voi frame world cua Gazebo (robot spawn tai goc toa do).
+frame_id: base_link
+group_name: ur_manipulator
+ee_link: tool0
+touch_links: [tool0, wrist_3_link, wrist_2_link, wrist_1_link]
+joint_names: [shoulder_pan_joint, shoulder_lift_joint, elbow_joint, wrist_1_joint, wrist_2_joint, wrist_3_joint]
+home_joints: [0.0, -1.5707, 0.0, -1.5707, 0.0, 0.0]
+table_top_z: -0.01        # mat ban thap hon base 1 cm
+cube_size: 0.04
+tcp_offset: 0.16          # tool0 -> tam cac ngon gripper (m); chinh theo gripper that
+approach_height: 0.10     # do cao dung tren vat truoc khi ha xuong
+grasp_orientation: [0.0, 1.0, 0.0, 0.0]   # quaternion xyzw, tool huong xuong
+velocity_scaling: 0.2
+objects:                  # [x, y]
+  red_cube:    [-0.40, -0.12]
+  yellow_cube: [-0.40,  0.00]
+  blue_cube:   [-0.40,  0.12]
+zones:
+  zone_a: [-0.25, -0.15]
+  zone_b: [-0.25,  0.00]
+  zone_c: [-0.25,  0.15]
+temp_zones:               # chi de planner tu chen buoc khi zone dich bi chiem
+  zone_temp1: [-0.32,  0.27]
+  zone_temp2: [-0.32, -0.27]
